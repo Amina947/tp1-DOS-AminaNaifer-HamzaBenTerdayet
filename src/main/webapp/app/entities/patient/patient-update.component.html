@@ -1,0 +1,54 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-patient-heading">Create or edit a Patient</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_nom">Nom</label>
+                    <input type="text" class="form-control" name="nom" id="field_nom"
+                           formControlName="nom"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_tel">Tel</label>
+                    <input type="number" class="form-control" name="tel" id="field_tel"
+                           formControlName="tel"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_medecin">Medecin</label>
+                    <select class="form-control" id="field_medecin" name="medecin" formControlName="medecin">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="medecinOption.id === editForm.get('medecin')!.value?.id ? editForm.get('medecin')!.value : medecinOption" *ngFor="let medecinOption of medecins; trackBy: trackById">{{ medecinOption.id }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ordonnance">Ordonnance</label>
+                    <select class="form-control" id="field_ordonnance" name="ordonnance" formControlName="ordonnance">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="ordonnanceOption.id === editForm.get('ordonnance')!.value?.id ? editForm.get('ordonnance')!.value : ordonnanceOption" *ngFor="let ordonnanceOption of ordonnances; trackBy: trackById">{{ ordonnanceOption.id }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
